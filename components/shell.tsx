@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { CartBar, CartProvider } from "@/components/cart";
@@ -39,12 +40,20 @@ export function Footer() {
       <p className="mt-2">
         {SITE.instagramHandle} · {SITE.whatsappDisplay}
       </p>
-      <p className="mt-2 text-mist/50">
-        Cortesía Nos Mueve ·{" "}
-        <a href="https://feria.freeagentsdev.com" className="hover:text-paper">
-          FreeAgents
-        </a>
-      </p>
+      <a
+        href="https://freeagentsdev.com"
+        className="mx-auto mt-4 flex w-fit items-center gap-1.5 text-[11px] text-mist/55 hover:text-paper"
+      >
+        <span>Cortesía hecha con</span>
+        <Image
+          src="/fa-logo.png"
+          alt=""
+          width={16}
+          height={16}
+          className="size-4 rounded-full object-cover"
+        />
+        <span className="font-medium tracking-wide">FreeAgents</span>
+      </a>
     </footer>
   );
 }

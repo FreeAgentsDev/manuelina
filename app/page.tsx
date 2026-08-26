@@ -9,13 +9,12 @@ export default function HomePage() {
       <div className="text-center">
         <BrandMark size="lg" />
         <p className="mt-2 text-[11px] font-medium tracking-[0.32em] text-mist uppercase">
-          Feria · {SITE.city}
+          {SITE.city}
         </p>
       </div>
       <p className="mt-6 text-center text-sm font-light leading-relaxed text-paper/90">
-        Pasta fresca, hecha con oficio. El local no está; la marca sí. En la
-        feria te atendemos, tomamos el pedido por WhatsApp y te avisamos cuando
-        volvamos a tener mesa.
+        Pasta fresca hecha a mano, salsas de la casa, risotto, panini, brunch y
+        café. Arma tu pedido en la carta y envíalo por WhatsApp.
       </p>
 
       <div className="mt-8 flex flex-col gap-3">
