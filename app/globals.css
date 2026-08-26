@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans-loaded), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-script-loaded), cursive;
+  --color-navy: #2a466c;
+  --color-paper: #ffffff;
+  --color-mist: #d5deea;
+}
+
+html {
+  background: #2a466c;
+  color: #ffffff;
+}
+
+body {
+  min-height: 100dvh;
+  background: #2a466c;
+}
+
+::selection {
+  background: #ffffff;
+  color: #2a466c;
+}

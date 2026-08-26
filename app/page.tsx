@@ -1,0 +1,50 @@
+import { BrandMark } from "@/components/brand-mark";
+import { FeaturedList } from "@/components/featured-list";
+import { Shell } from "@/components/shell";
+import { FEATURED, SITE } from "@/lib/site";
+
+export default function HomePage() {
+  return (
+    <Shell>
+      <div className="text-center">
+        <BrandMark size="lg" />
+        <p className="mt-2 text-[11px] font-medium tracking-[0.32em] text-mist uppercase">
+          Feria · {SITE.city}
+        </p>
+      </div>
+      <p className="mt-6 text-center text-sm font-light leading-relaxed text-paper/90">
+        Pasta fresca, hecha con oficio. El local no está; la marca sí. En la
+        feria te atendemos, tomamos el pedido por WhatsApp y te avisamos cuando
+        volvamos a tener mesa.
+      </p>
+
+      <div className="mt-8 flex flex-col gap-3">
+        <a
+          href="/carta"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-paper text-sm font-semibold tracking-wide text-navy"
+        >
+          Armar pedido
+        </a>
+        <a
+          href="/lista"
+          className="inline-flex h-12 items-center justify-center rounded-full border border-white/35 text-sm font-semibold tracking-wide text-paper"
+        >
+          Quiero que me avisen
+        </a>
+      </div>
+
+      <section className="mt-12">
+        <h2 className="text-center text-[11px] font-medium tracking-[0.22em] text-mist uppercase">
+          De la carta
+        </h2>
+        <FeaturedList items={FEATURED} />
+        <a
+          href="/carta"
+          className="mt-4 block text-center text-xs font-medium tracking-[0.16em] text-mist uppercase hover:text-paper"
+        >
+          Carta completa
+        </a>
+      </section>
+    </Shell>
+  );
+}
