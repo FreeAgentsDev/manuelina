@@ -38,7 +38,23 @@ export function Footer() {
     <footer className="mt-16 border-t border-white/15 pt-6 text-center text-xs text-mist/80">
       <p className="tracking-[0.18em] uppercase">{SITE.city}</p>
       <p className="mt-2">
-        {SITE.instagramHandle} · {SITE.whatsappDisplay}
+        <a
+          href={SITE.instagram}
+          target="_blank"
+          rel="noreferrer"
+          className="hover:text-paper"
+        >
+          {SITE.instagramHandle}
+        </a>
+        {" · "}
+        <a
+          href={`https://wa.me/${SITE.whatsapp}`}
+          target="_blank"
+          rel="noreferrer"
+          className="hover:text-paper"
+        >
+          {SITE.whatsappDisplay}
+        </a>
       </p>
       <a
         href="https://freeagentsdev.com"
