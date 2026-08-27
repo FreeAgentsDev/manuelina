@@ -181,7 +181,7 @@ export function CartBar() {
   if (count === 0) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] print:hidden">
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
       <div className="pointer-events-auto mx-auto max-w-lg overflow-hidden rounded-3xl border border-white/20 bg-navy shadow-[0_-8px_40px_rgba(0,0,0,0.35)]">
         {open ? (
           <div className="max-h-[50vh] overflow-y-auto px-4 py-4">
