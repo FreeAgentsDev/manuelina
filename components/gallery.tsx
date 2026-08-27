@@ -8,75 +8,76 @@ import { GALLERY } from "@/lib/site";
 const SPEED = 36;
 const SLIDE_RATIO = 0.78;
 const GAP = 12;
+const DRAG = 8;
 
 export function Gallery() {
   const n = GALLERY.length;
   const slides = [...GALLERY, ...GALLERY];
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const widthRef = useRef(0);
   const offsetRef = useRef(0);
-  const draggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const originRef = useRef(0);
-  const movedRef = useRef(false);
-  const tweenRef = useRef<{ from: number; to: number; start: number } | null>(
+  const pressRef = useRef<{
+    id: number;
+    x: number;
+    origin: number;
+    dragged: boolean;
+  } | null>(null);
+  const tweenRef = useRef<{ from: number; to: number; t0: number } | null>(
     null,
   );
 
-  function metrics() {
-    const width = widthRef.current;
-    const slideW = width * SLIDE_RATIO;
-    const stride = slideW + GAP;
-    const loopW = n * stride;
-    return { width, slideW, stride, loopW };
+  function stride() {
+    return widthRef.current * SLIDE_RATIO + GAP;
   }
 
-  function wrap(value: number, loopW: number) {
-    if (loopW <= 0) return value;
-    let v = value;
-    while (v <= -loopW) v += loopW;
-    while (v > 0) v -= loopW;
+  function loopW() {
+    return n * stride();
+  }
+
+  function wrap(value: number) {
+    const w = loopW();
+    if (w <= 0) return value;
+    let v = value % w;
+    if (v > 0) v -= w;
     return v;
   }
 
   function paint() {
     const track = trackRef.current;
-    if (!track) return;
-    const { slideW } = metrics();
-    track.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
-    cardRefs.current.forEach((card) => {
-      if (!card || !slideW) return;
-      card.style.width = `${slideW}px`;
-    });
+    if (track) track.style.transform = `translate3d(${offsetRef.current}px,0,0)`;
   }
 
   function centerOn(i: number) {
-    const { width, slideW, stride, loopW } = metrics();
+    const width = widthRef.current;
     if (!width) return;
-    const from = offsetRef.current;
+    const slideW = width * SLIDE_RATIO;
     const pad = (width - slideW) / 2;
-    const raw = pad - i * stride;
-    let delta = raw - from;
-    while (delta > loopW / 2) delta -= loopW;
-    while (delta < -loopW / 2) delta += loopW;
-    tweenRef.current = { from, to: from + delta, start: performance.now() };
+    const from = offsetRef.current;
+    let delta = pad - i * stride() - from;
+    const w = loopW();
+    while (delta > w / 2) delta -= w;
+    while (delta < -w / 2) delta += w;
+    tweenRef.current = { from, to: from + delta, t0: performance.now() };
   }
 
   useLayoutEffect(() => {
     const el = viewportRef.current;
-    if (!el) return;
-    const sync = () => {
+    const track = trackRef.current;
+    if (!el || !track) return;
+    const layout = () => {
       widthRef.current = el.clientWidth;
-      const { width, slideW } = metrics();
+      const slideW = widthRef.current * SLIDE_RATIO;
+      for (const card of track.children) {
+        (card as HTMLElement).style.width = `${slideW}px`;
+      }
       if (offsetRef.current === 0) {
-        offsetRef.current = (width - slideW) / 2;
+        offsetRef.current = (widthRef.current - slideW) / 2;
       }
       paint();
     };
-    sync();
-    const ro = new ResizeObserver(sync);
+    layout();
+    const ro = new ResizeObserver(layout);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -84,52 +85,56 @@ export function Gallery() {
   useEffect(() => {
     let raf = 0;
     let last = performance.now();
-    const step = (now: number) => {
+    const tick = (now: number) => {
       const dt = Math.min(48, now - last);
       last = now;
-      const { loopW } = metrics();
       const tween = tweenRef.current;
       if (tween) {
-        const t = Math.min(1, (now - tween.start) / 700);
-        const ease = 1 - (1 - t) ** 3;
-        offsetRef.current = tween.from + (tween.to - tween.from) * ease;
+        const t = Math.min(1, (now - tween.t0) / 700);
+        offsetRef.current =
+          tween.from + (tween.to - tween.from) * (1 - (1 - t) ** 3);
         if (t >= 1) tweenRef.current = null;
-      } else if (!draggingRef.current) {
+      } else if (!pressRef.current?.dragged) {
         offsetRef.current -= (SPEED * dt) / 1000;
       }
-      offsetRef.current = wrap(offsetRef.current, loopW);
+      offsetRef.current = wrap(offsetRef.current);
       paint();
-      raf = requestAnimationFrame(step);
+      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(step);
+    raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  function onPointerDown(e: React.PointerEvent) {
-    movedRef.current = false;
-    draggingRef.current = false;
-    startXRef.current = e.clientX;
-    originRef.current = offsetRef.current;
+  function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    pressRef.current = {
+      id: e.pointerId,
+      x: e.clientX,
+      origin: offsetRef.current,
+      dragged: false,
+    };
   }
 
-  function onPointerMove(e: React.PointerEvent) {
-    const delta = e.clientX - startXRef.current;
-    if (Math.abs(delta) < 8) return;
-    if (!draggingRef.current) {
-      draggingRef.current = true;
-      movedRef.current = true;
+  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    const press = pressRef.current;
+    if (!press || press.id !== e.pointerId) return;
+    const dx = e.clientX - press.x;
+    if (!press.dragged) {
+      if (Math.abs(dx) < DRAG) return;
+      press.dragged = true;
       tweenRef.current = null;
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      e.currentTarget.setPointerCapture(e.pointerId);
     }
-    offsetRef.current = originRef.current + delta;
+    offsetRef.current = press.origin + dx;
   }
 
-  function onPointerUp(e: React.PointerEvent) {
-    if (!movedRef.current) {
-      const node = (e.target as HTMLElement | null)?.closest("[data-slide]");
-      if (node) centerOn(Number(node.getAttribute("data-slide")));
+  function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+    const press = pressRef.current;
+    if (!press || press.id !== e.pointerId) return;
+    if (!press.dragged) {
+      const slide = (e.target as HTMLElement).closest("[data-slide]");
+      if (slide) centerOn(Number(slide.getAttribute("data-slide")));
     }
-    draggingRef.current = false;
+    pressRef.current = null;
   }
 
   return (
@@ -143,18 +148,17 @@ export function Gallery() {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        onPointerCancel={() => {
-          draggingRef.current = false;
-        }}
+        onPointerCancel={onPointerUp}
       >
-        <div ref={trackRef} className="flex items-center" style={{ gap: GAP }}>
+        <div
+          ref={trackRef}
+          className="flex will-change-transform"
+          style={{ gap: GAP }}
+        >
           {slides.map((photo, i) => (
             <div
               key={`${photo.src}-${i}`}
               data-slide={i}
-              ref={(node) => {
-                cardRefs.current[i] = node;
-              }}
               className="relative shrink-0 cursor-pointer overflow-hidden rounded-2xl"
             >
               <Image
