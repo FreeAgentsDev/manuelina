@@ -8,7 +8,14 @@ export const SITE = {
   whatsappDisplay: "+57 311 459 6193",
   instagram: "https://instagram.com/manuelina_mz",
   instagramHandle: "@manuelina_mz",
-  mapsUrl: process.env.NEXT_PUBLIC_MAPS_URL ?? "",
+  mapsUrl:
+    process.env.NEXT_PUBLIC_MAPS_URL ??
+    "https://maps.app.goo.gl/4thyPQdXFECzRkH57",
+  mapsEmbed:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3974.2731251429163!2d-75.487719!3d5.059414599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4765ef9dcbe46f%3A0x5edc011cd77dc065!2sManuelina!5e0!3m2!1ses!2sco!4v1787850500389!5m2!1ses!2sco",
+  mapsAddress: "Cl. 61 #23-07",
+  mapsDirections:
+    "https://www.google.com/maps/dir/?api=1&destination=Manuelina,+Cl.+61+%2323-07,+Manizales,+Caldas",
   owner: "Manuela Gómez",
 } as const;
 

@@ -10,16 +10,46 @@ export default function MapsPage() {
         Google Maps
       </h1>
       <p className="mt-3 text-center text-sm font-light leading-relaxed text-mist">
-        La ficha anterior de Google quedó cerrada. Cuando Manuela tenga el
-        enlace nuevo, este botón abre Maps para dejar la reseña desde el stand.
+        Cómo llegar y reseñas de Manuelina. Desde el stand, abre la ficha y
+        déjanos una.
       </p>
       {hasMaps ? (
-        <a
-          href={SITE.mapsUrl}
-          className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-full bg-paper text-sm font-semibold tracking-wide text-navy"
-        >
-          Abrir Google Maps
-        </a>
+        <>
+          <div className="mt-8 overflow-hidden rounded-2xl border border-white/20 bg-paper/5">
+            <iframe
+              title="Ubicación de Manuelina en Google Maps"
+              src={SITE.mapsEmbed}
+              className="block h-[280px] w-full border-0 sm:h-[320px]"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            <div className="border-t border-white/15 px-4 py-4">
+              <p className="text-sm font-semibold tracking-wide">{SITE.name}</p>
+              <p className="mt-1 text-sm font-light text-mist">
+                {SITE.mapsAddress} · {SITE.city}
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href={SITE.mapsDirections}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-12 w-full items-center justify-center rounded-full bg-paper text-sm font-semibold tracking-wide text-navy"
+            >
+              Cómo llegar
+            </a>
+            <a
+              href={SITE.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-12 w-full items-center justify-center rounded-full border border-white/35 text-sm font-semibold tracking-wide text-paper"
+            >
+              Abrir ficha y reseñas
+            </a>
+          </div>
+        </>
       ) : (
         <p className="mt-8 rounded-2xl border border-white/20 px-4 py-4 text-center text-sm text-mist">
           Enlace de Maps pendiente. Mientras tanto, síguenos en{" "}
