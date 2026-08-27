@@ -16,7 +16,7 @@ const LINKS = [
 
 export function Header() {
   return (
-    <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
+    <header className="mb-10 flex flex-wrap items-center justify-between gap-4 print:hidden">
       <Link href="/" className="leading-tight" aria-label="Manuelina">
         <Wordmark className="block text-2xl text-paper" />
         <span className="text-[10px] font-light tracking-[0.22em] text-mist uppercase">
@@ -36,7 +36,7 @@ export function Header() {
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-white/15 pt-6 text-center text-xs text-mist/80">
+    <footer className="mt-16 border-t border-white/15 pt-6 text-center text-xs text-mist/80 print:hidden">
       <p className="tracking-[0.18em] uppercase">{SITE.city}</p>
       <p className="mt-2">
         <a
@@ -78,7 +78,7 @@ export function Footer() {
 export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <CartProvider>
-      <div className="mx-auto min-h-dvh max-w-lg px-5 py-8 pb-28">
+      <div className="mx-auto min-h-dvh max-w-lg px-5 py-8 pb-28 print:pb-8">
         <Header />
         {children}
         <Footer />

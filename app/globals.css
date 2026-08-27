@@ -22,3 +22,27 @@ body {
   background: #ffffff;
   color: #2a466c;
 }
+
+@media print {
+  @page {
+    margin: 10mm;
+    size: A6;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #2a466c;
+  }
+
+  header,
+  footer,
+  .print-hide {
+    display: none !important;
+  }
+
+  .print-sheet {
+    margin: 0 !important;
+    border-color: #2a466c !important;
+  }
+}
