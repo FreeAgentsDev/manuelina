@@ -18,12 +18,12 @@ http://localhost:3020
 - `/` ficha
 - `/carta` menú con carrito a WhatsApp
 - `/pedir` abre WhatsApp
-- `/lista` captura de clientes (la lista es de Manuelina)
+- `/lista` formulario de Manuela (Google Forms → su Drive)
 - `/maps` reseñas (enlace pendiente)
-- `/qr` código para imprimir
+- `/qr` descarga del diseño para imprimir en mate
 
 ## Pendiente de Manuela
 
-Maps si lo reactivan, y persistir la lista de clientes en producción (hoy queda en el servidor).
+Maps si lo reactivan.
 
 WhatsApp: 311 459 6193 · IG @manuelina_mz

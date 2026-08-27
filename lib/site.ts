@@ -17,6 +17,10 @@ export const SITE = {
   mapsDirections:
     "https://www.google.com/maps/dir/?api=1&destination=Manuelina,+Cl.+61+%2323-07,+Manizales,+Caldas",
   owner: "Manuela Gómez",
+  listaFormEmbed:
+    "https://docs.google.com/forms/d/e/1FAIpQLSfRqIkiKzIOy7Rx8gaLPLkR0-m6xP5h88bU3zkfBU-gn9C_MA/viewform?embedded=true",
+  listaFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSfRqIkiKzIOy7Rx8gaLPLkR0-m6xP5h88bU3zkfBU-gn9C_MA/viewform",
 } as const;
 
 export function whatsappHref(text: string) {
