@@ -1,6 +1,7 @@
 import { CartaMenu } from "@/components/carta-menu";
+import { MenuFeriaImage } from "@/components/menu-feria";
 import { Shell } from "@/components/shell";
-import { MENU } from "@/lib/site";
+import { MENU_FERIA } from "@/lib/site";
 
 export default function CartaPage() {
   return (
@@ -12,10 +13,13 @@ export default function CartaPage() {
         Menú
       </h1>
       <p className="mt-4 text-center text-sm font-light leading-relaxed text-mist">
-        Agrega lo que quieras. El pedido se arma abajo y se envía por WhatsApp.
+        Lo que hay hoy en el stand. Agrega y envía el pedido por WhatsApp.
       </p>
+      <div className="mt-8">
+        <MenuFeriaImage />
+      </div>
       <div className="mt-12">
-        <CartaMenu sections={MENU} />
+        <CartaMenu sections={[MENU_FERIA]} />
       </div>
     </Shell>
   );

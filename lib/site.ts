@@ -70,6 +70,47 @@ export function formatCop(n: number) {
   return n.toLocaleString("es-CO");
 }
 
+export const MENU_FERIA: MenuSection = {
+  group: "Hoy en la feria",
+  header: "line",
+  items: [
+    { name: "Sánduche de birria", price: "20.000" },
+    {
+      name: "Pizza pepperoni-jamón",
+      price: "18.000",
+    },
+    {
+      name: "Pizza serrano-bondiola",
+      price: "18.000",
+    },
+    { name: "Pizza margarita", price: "18.000" },
+    { name: "Choripán", price: "18.000" },
+    { name: "Vino de verano" },
+    { name: "Sodas italianas", price: "12.000" },
+  ],
+};
+
+export const MENU_FERIA_IMAGE = {
+  src: "/media/manuelinamenuferia.jpg",
+  width: 900,
+  height: 1600,
+  alt: "Menú de Manuelina en la feria: sánduche de birria, pizza y choripán",
+} as const;
+
+export const GALLERY = [
+  { src: "/media/manuelina1.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina2.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina3.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina4.jpg", width: 1200, height: 1600 },
+  { src: "/media/manuelina5.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina6.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina7.jpg", width: 1200, height: 1600 },
+  { src: "/media/manuelina8.jpg", width: 1200, height: 1600 },
+  { src: "/media/manuelina9.jpg", width: 1086, height: 1448 },
+  { src: "/media/manuelina10.jpg", width: 900, height: 1600 },
+  { src: "/media/manuelina11.jpg", width: 900, height: 1600 },
+] as const;
+
 export const MENU: MenuSection[] = [
   {
     group: "Entradas",
@@ -373,7 +414,7 @@ export const MENU: MenuSection[] = [
 ];
 
 export const FEATURED = [
-  { section: MENU[0], item: MENU[0].items[0] },
-  { section: MENU[0], item: MENU[0].items[2] },
-  { section: MENU[1], item: MENU[1].items[3] },
+  { section: MENU_FERIA, item: MENU_FERIA.items[0] },
+  { section: MENU_FERIA, item: MENU_FERIA.items[3] },
+  { section: MENU_FERIA, item: MENU_FERIA.items[4] },
 ] as const;
