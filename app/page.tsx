@@ -1,5 +1,7 @@
 import { BrandMark } from "@/components/brand-mark";
 import { FeaturedList } from "@/components/featured-list";
+import { Gallery } from "@/components/gallery";
+import { MenuFeriaImage } from "@/components/menu-feria";
 import { Shell } from "@/components/shell";
 import { FEATURED, SITE } from "@/lib/site";
 
@@ -13,8 +15,8 @@ export default function HomePage() {
         </p>
       </div>
       <p className="mt-6 text-center text-sm font-light leading-relaxed text-paper/90">
-        Pasta fresca hecha a mano, salsas de la casa, risotto, panini, brunch y
-        café. Arma tu pedido en la carta y envíalo por WhatsApp.
+        Pasta fresca hecha a mano. Hoy en la feria: sánduche de birria, pizza,
+        choripán y bebidas. Arma el pedido y envíalo por WhatsApp.
       </p>
 
       <div className="mt-8 flex flex-col gap-3">
@@ -34,16 +36,21 @@ export default function HomePage() {
 
       <section className="mt-12">
         <h2 className="text-center text-[11px] font-medium tracking-[0.22em] text-mist uppercase">
-          De la carta
+          Hoy en la feria
         </h2>
+        <a href="/carta" className="mt-4 block">
+          <MenuFeriaImage />
+        </a>
         <FeaturedList items={FEATURED} />
         <a
           href="/carta"
           className="mt-4 block text-center text-xs font-medium tracking-[0.16em] text-mist uppercase hover:text-paper"
         >
-          Carta completa
+          Pedir lo de hoy
         </a>
       </section>
+
+      <Gallery />
     </Shell>
   );
 }

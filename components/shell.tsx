@@ -8,6 +8,7 @@ import { SITE } from "@/lib/site";
 const LINKS = [
   { href: "/", label: "Inicio" },
   { href: "/carta", label: "Carta" },
+  { href: "/#galeria", label: "Galería" },
   { href: "/lista", label: "Avisame" },
   { href: "/maps", label: "Maps" },
   { href: "/qr", label: "QR" },
